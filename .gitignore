@@ -1,0 +1,20 @@
+# Build output
+/target/
+/out/
+/bin/
+
+# IDE / OS garbage
+*.iml
+.idea/
+.vscode/
+*.class
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+/logs/
+
+# Sensitive configs
+application.properties
+config.properties
