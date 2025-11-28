@@ -1,0 +1,29 @@
+{
+  "rules": {
+    "HighAmountRule": {
+      "enabled": true,
+      "weight": 30
+    },
+    "GeoLocationRule": {
+      "enabled": true,
+      "weight": 25
+    },
+    "NightTimeRule": {
+      "enabled": true,
+      "weight": 20,
+      "nightStartHour": 0,
+      "nightEndHour": 5
+    },
+    "ChannelRiskRule": {
+      "enabled": true,
+      "weightOnline": 15
+    },
+    "RiskyMerchantRule": {
+      "enabled": true,
+      "weight": 25
+    }
+  },
+
+  "riskyCountries": ["Russia", "Nigeria", "Turkey", "USA"],
+  "riskyMerchants": ["JEWELER", "LUXURY", "EXPENSIVE_STORE", "EXPENSIVE_ELECTRONICS"]
+}
