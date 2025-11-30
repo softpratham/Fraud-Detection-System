@@ -11,10 +11,9 @@ A high-performance, rule-based fraud detection engine built with Core Java. This
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Installation and Setup](#installation-and-setup)
-- [Configuration](#configuration)
 - [Usage](#usage)
 - [Testing](#testing)
-- [License](#license)
+- [Author](#author)
 
 ## Overview
 
@@ -46,15 +45,15 @@ The core engine evaluates transactions using weighted rules defined in configura
 
 ## Technology Stack
 
-* **Language:** Java 11+ (Core Java)
-* **Build Tool:** Apache Maven
-* **Database:** MySQL 8.0
-* **Data Access:** JDBC with HikariCP (Connection Pooling)
-* **JSON Processing:** Jackson
-* **CSV Processing:** Apache Commons CSV
-* **PDF Generation:** iText 7
-* **Logging:** SLF4J with Logback
-* **Testing:** JUnit 5, Mockito
+| Category | Technology |
+| :--- | :--- |
+| **Language** | Java 11+ (Core Java) |
+| **Build Tool** | Apache Maven |
+| **Database** | MySQL 8.0 |
+| **Data Access** | JDBC, HikariCP (Connection Pooling) |
+| **Reporting** | iText 7 (PDF), Apache Commons CSV, Jackson (JSON) |
+| **Testing** | JUnit 5, Mockito |
+| **Logging** | SLF4J, Logback |
 
 ## Project Structure
 
@@ -68,3 +67,128 @@ src/main/java/com/fraud
 ├── rules         # Business Logic (Rule interface and implementations)
 ├── service       # Service Layer (DetectionService, ReportService)
 └── util          # Utilities (CSV Parsing, Database Connections)
+```
+## Prerequisites
+
+- Java Development Kit (JDK) 11 or higher  
+- Apache Maven 3.6 or higher  
+- MySQL Server 8.0  
+
+---
+
+## Installation and Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/fraud-detection-system.git
+cd fraud-detection-system
+```
+
+### 2. Initialize the Database
+
+Log in to your MySQL instance and run the initialization script located at `src/main/resources/schema.sql`.
+
+```sql
+CREATE DATABASE frauddb;
+USE frauddb;
+SOURCE src/main/resources/schema.sql;
+```
+
+### 3. Configure the Application
+
+Navigate to `src/main/resources/` and create a file named `application.properties`. You can copy the example file or use the template below:
+
+```properties
+
+# Database Configuration
+db.url=jdbc:mysql://localhost:3306/frauddb
+db.user=YOUR_DB_USER
+db.password=YOUR_DB_PASSWORD
+
+# Application Settings
+thread.pool.size=8
+report.output=alerts_report.csv
+
+# Fraud Detection Thresholds
+high_amount_threshold=50000
+risk.score.high=60
+risk.score.medium=30
+velocity.window.seconds=120
+velocity.limit=3
+```
+
+### 4. Build the Project
+
+```bash
+mvn clean package
+```
+
+## Usage
+
+The application can be run in two modes: **Interactive Console** or **Non-Interactive CLI**.
+
+### Interactive Console
+
+To launch the interactive analyst dashboard:
+
+```bash
+mvn exec:java -Dexec.mainClass="com.fraud.app.Main"
+```
+
+**Menu Options:**
+
+- **Run Detection Pipeline**: Processes the `transactions.csv` file and saves alerts to the database.
+- **Monthly Summary Reports**: Displays analytics of fraud trends.
+- **Export Alerts**: Generates reports in the selected format (CSV, PDF, JSON).
+- **System Status**: Checks database connectivity and configuration.
+
+### Non-Interactive CLI
+
+You can execute specific tasks directly from the command line using arguments.
+
+**Run the detection pipeline:**
+
+```bash
+mvn exec:java -Dexec.mainClass="com.fraud.app.Main" -Dexec.args="run-detection"
+```
+
+**Export a PDF report for a specific account:**
+
+```bash
+mvn exec:java -Dexec.mainClass="com.fraud.app.Main" -Dexec.args="export-pdf acct123 report.pdf"
+```
+
+**Test Database Connection:**
+
+```bash
+mvn exec:java -Dexec.mainClass="com.fraud.app.Main" -Dexec.args="db-test"
+```
+
+## Testing
+
+The project includes unit tests for the Rule Engine and Service layer. Tests are written using JUnit 5 and Mockito.
+
+- **Rule Tests**: Verify individual rules (e.g., `HighAmountRuleTest`) ensuring thresholds trigger correctly.
+- **Service Tests**: Verify the orchestration logic (`DetectionServiceTest`) using mocks to isolate business logic from the database.
+
+To run the test suite:
+
+```bash
+mvn test
+```
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/NewFeature`).
+3. Commit your changes.
+4. Push to the branch and open a Pull Request.
+
+
+## Author
+**Prathmesh Deokar**
+* **GitHub:** [github.com/softpratham](https://github.com/softpratham)
+* **LinkedIn:** [linkedin.com/in/prathmeshdeokar37](https://www.linkedin.com/in/prathmeshdeokar37)
